@@ -52,7 +52,20 @@ def lambda_handler(event, context):
         
         print("Processing message:", message)
         print("Using model:", MODEL_ID)
-        
+
+        messages = conversation_history.copy()
+
+　　　　　# 「今日はどんなこと教えてくれるの?」を挿入
+　　　　　messages.insert(0, {
+　　　　    "role": "user",
+　　　　    "content": "今日はどんなこと教えてくれるの？"
+　　　　　})
+
+　　　　　# ユーザーの入力も続けて追加
+　　　　　messages.append({
+　　　　    "role": "user",
+　　　　    "content": message
+　　　　　})
         # 会話履歴を使用
         messages = conversation_history.copy()
         
