@@ -4,7 +4,15 @@ import os
 import boto3
 import re  # 正規表現モジュールをインポート
 from botocore.exceptions import ClientError
+from fastapi import FastAPI
+from pydantic import BaseModel
 
+app = FastAPI()
+class Message(BaseModel):
+    text: str
+@app.post("/predict")
+def predict(msg: Message):
+    return {"response": f"受け取ったもの: {msg.text}"}
 
 # Lambda コンテキストからリージョンを抽出する関数
 def extract_region_from_arn(arn):
